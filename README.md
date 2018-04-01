@@ -1,6 +1,6 @@
 # Cuis-University-Installer
 Scripts to generate CuisUniversity installer for all the platformw
-# Steps
+# Image Building Steps
 1) Run 1-refreshEnvironment.sh --> 
    a) removes all files used to create the previous installation (.zip, .tar.gz, Cuis5.0 image, etc).
    b) retrives latest version of Cuis5.0 from gitGub
@@ -12,3 +12,5 @@ Scripts to generate CuisUniversity installer for all the platformw
 3) Start a linux 32 VM and run 4-build32LinuxImage.sh --> creates linux 32 bits CuisUniversity image
 4) Run 5-zip.sh --> create .zip and .tar.gz files for each platform
 5) Upload new files to https://github.com/Cuis-University/Cuis-University/releases
+# VM Update Steps
+Updating the VMs is not automatized. It has to be done manually
