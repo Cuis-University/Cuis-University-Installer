@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 8:03:38 pm'!
-'Description Fix to get the right version number'!
-!provides: 'Cuis-University-InstallerBuilder' 1 1!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 8:25:42 pm'!
+'Description Script generation takes cares about windows commands'!
+!provides: 'Cuis-University-InstallerBuilder' 1 2!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -135,22 +135,23 @@ generateZipScript
 
 ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 4/1/2018 00:36:52'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 4/15/2018 20:25:09'!
 addCopyImageTo: fileStream on: osDir imageNameTail: tail pathSeparator: pathSeparator with: versionNumber
 
 	fileStream 
 		newLine;
-		nextPutAll: 'rm ';
+		nextPutAll: (pathSeparator = '/' ifTrue: [ 'rm '] ifFalse: [ 'del ' ]);
 		nextPutAll: osDir;
 		nextPutAll: pathSeparator;
 		nextPutAll: '*.image';
 		newLine;
-		nextPutAll: 'rm ';
+		nextPutAll: (pathSeparator = '/' ifTrue: [ 'rm '] ifFalse: [ 'del ' ]);
 		nextPutAll: osDir;
 		nextPutAll: pathSeparator;
 		nextPutAll: '*.changes';
 		newLine;
-		nextPutAll: 'cp CuisUniversity-';
+		nextPutAll: (pathSeparator = '/' ifTrue: [ 'cp'] ifFalse: [ 'copy' ]);
+		nextPutAll: ' CuisUniversity-';
 		nextPutAll: versionNumber;
 		nextPutAll: tail;
 		nextPutAll: '.* ';
