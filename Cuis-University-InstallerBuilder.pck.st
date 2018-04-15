@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3283] on 1 April 2018 at 1:05:02 am'!
-'Description first version'!
-!provides: 'Cuis-University-InstallerBuilder' 1 0!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 8:03:38 pm'!
+'Description Fix to get the right version number'!
+!provides: 'Cuis-University-InstallerBuilder' 1 1!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -20,13 +20,13 @@ cuisSmalltalkDevDirName
 	
 	^'../Cuis-Smalltalk-Dev'! !
 
-!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 4/1/2018 00:12:29'!
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 4/15/2018 20:02:31'!
 cuisVersionNumber
 
 	| cuisSmalltalkDevDir fileNames imageName versionNumber |
 	
 	cuisSmalltalkDevDir := self cuisSmalltalkDevDirName asDirectoryEntry.
-	fileNames := cuisSmalltalkDevDir fileNamesMatching: 'Cuis5.0-*.image'.
+	fileNames := (cuisSmalltalkDevDir fileNamesMatching: 'Cuis5.0-*.image') asSortedCollection: [:fileNameLeft :fileNameRight | fileNameLeft size < fileNameRight size ].
 	fileNames isEmpty ifTrue: [ self error: 'Image file not found' ].
 	
 	imageName := fileNames first.
