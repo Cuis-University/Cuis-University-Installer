@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 15 April 2018 at 8:25:42 pm'!
-'Description Script generation takes cares about windows commands'!
-!provides: 'Cuis-University-InstallerBuilder' 1 2!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 6 August 2018 at 1:29:29 am'!
+'Description Changes to generate same 32 bit for windows and linux'!
+!provides: 'Cuis-University-InstallerBuilder' 1 3!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -34,42 +34,28 @@ cuisVersionNumber
 	
 	^versionNumber ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 4/1/2018 00:39:48'!
-generate32LinuxBitImageBuilderScriptWith: versionNumber
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 01:14:39'!
+generate32BitImageBuilderScriptWith: versionNumber
 
-	"self generate32LinuxBitImageBuilderScriptWith: '3283'"
+	"self generate32BitImageBuilderScriptWith: '3283'"
 	
 	self 
-		generate: '4-build32LinuxImage.sh' 
-		vmPath: 'linux32/vm/squeak' 
-		imageNameTail: '-V3' 
-		platforms: #('linux32') 
-		pathSeparator: '/' 
-		with: versionNumber
-! !
-
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 4/1/2018 00:41:13'!
-generate32WinBitImageBuilderScriptWith: versionNumber
-
-	"self generate32WinBitImageBuilderScriptWith: '3283'"
-	
-	self 
-		generate: '3-build32WinImage.bat' 
-		vmPath: 'windows32\vm\Squeak' 
+		generate: '3-build32Image.sh' 
+		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
 		imageNameTail: '-32' 
-		platforms: #('windows32') 
-		pathSeparator: '\' 
+		platforms: #('windows32' 'linux32') 
+		pathSeparator: '/' 
 		with: versionNumber
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 4/1/2018 00:42:13'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 01:06:27'!
 generate64BitImageBuilderScriptWith: versionNumber
 
 	"self generate64BitImageBuilderScriptWith: '3283'"
 	
 	self 
 		generate: '2-build64Image.sh' 
-		vmPath: '../CocoaFast64.app/Contents/MacOS/Squeak' 
+		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
 		imageNameTail: '' 
 		platforms: #('macos64' 'linux64' 'windows64') 
 		pathSeparator: '/' 
@@ -87,7 +73,7 @@ generateRunScriptsWith: versionNumber
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 4/1/2018 00:49:02'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 00:57:02'!
 generateScripts
 
 	"self generateScripts"
@@ -98,8 +84,7 @@ generateScripts
 	
 	self 
 		generate64BitImageBuilderScriptWith: versionNumber;
-		generate32WinBitImageBuilderScriptWith: versionNumber;
-		generate32LinuxBitImageBuilderScriptWith: versionNumber;
+		generate32BitImageBuilderScriptWith: versionNumber;
 		generateRunScriptsWith: versionNumber;
 		generateZipScript
 ! !
@@ -110,13 +95,13 @@ generateScriptsAndExit
 	self generateScripts.
 	Smalltalk snapshot: true andQuit: true! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/31/2018 15:46:34'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 00:59:58'!
 generateZipScript	
 	
 	| fileStream  |
 		
 	fileStream := FileStream concreteStream new 
-		open: '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/5-zip.sh' 
+		open: '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/4-zip.sh' 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create zip script file' ].
 
@@ -216,13 +201,13 @@ generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versi
 
 ! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:56:23'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 8/6/2018 01:19:29'!
 generateLinux32RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'linux32/run.sh'
 		vmPath: 'vm/squeak'
-		imageNameTail: '-V3'
+		imageNameTail: '-32'
 		with: versionNumber! !
 
 !CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:54:55'!

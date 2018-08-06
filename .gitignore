@@ -6,11 +6,11 @@ Packages
 *.zip
 *.tar.gz
 2*.sh
-3*.bat
+3*.sh
 4*.sh
-5*.sh
 linux32
 linux64
 macos64
 windows32
 windows64
+vms

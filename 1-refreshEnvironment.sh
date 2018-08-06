@@ -64,4 +64,4 @@ cp -R CoreUpdates ../Cuis-University-Installer/windows64/CoreUpdates
 cp -R CoreUpdates ../Cuis-University-Installer/macos64/CoreUpdates
 
 cd ../Cuis-University-Installer
-../CocoaFast64.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
+../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
