@@ -23,6 +23,12 @@ rm -R windows32/CoreUpdates
 rm -R windows64/CoreUpdates
 rm -R macos64/CoreUpdates
 
+rm -R linux32/AdditionalFontData
+rm -R linux64/AdditionalFontData
+rm -R windows32/AdditionalFontData
+rm -R windows64/AdditionalFontData
+rm -R macos64/AdditionalFontData
+
 cd ../Cuis-Smalltalk-Dev
 git pull
 cp Cuis5.0-*.image ../Cuis-University-Installer
@@ -45,6 +51,12 @@ cp ../Calendars/Chalten/Chalten.pck.st ../Cuis-University-Installer/linux64/Pack
 cp ../Calendars/Chalten/Chalten.pck.st ../Cuis-University-Installer/windows32/Packages
 cp ../Calendars/Chalten/Chalten.pck.st ../Cuis-University-Installer/windows64/Packages
 cp ../Calendars/Chalten/Chalten.pck.st ../Cuis-University-Installer/macos64/Packages
+
+cp ../LiveTyping/Smalltalk/LiveTyping.pck.st ../Cuis-University-Installer/linux32/Packages
+cp ../LiveTyping/Smalltalk/LiveTyping.pck.st ../Cuis-University-Installer/linux64/Packages
+cp ../LiveTyping/Smalltalk/LiveTyping.pck.st ../Cuis-University-Installer/windows32/Packages
+cp ../LiveTyping/Smalltalk/LiveTyping.pck.st ../Cuis-University-Installer/windows64/Packages
+cp ../LiveTyping/Smalltalk/LiveTyping.pck.st ../Cuis-University-Installer/macos64/Packages
 
 cp ../Cuis-Smalltalk-DenotativeObject/DenotativeObject.pck.st ../Cuis-University-Installer/linux32/Packages
 cp ../Cuis-Smalltalk-DenotativeObject/DenotativeObject.pck.st ../Cuis-University-Installer/linux64/Packages
@@ -81,6 +93,12 @@ cp -R CoreUpdates ../Cuis-University-Installer/linux64/CoreUpdates
 cp -R CoreUpdates ../Cuis-University-Installer/windows32/CoreUpdates
 cp -R CoreUpdates ../Cuis-University-Installer/windows64/CoreUpdates
 cp -R CoreUpdates ../Cuis-University-Installer/macos64/CoreUpdates
+
+cp -R AdditionalFontData ../Cuis-University-Installer/linux32/AdditionalFontData
+cp -R AdditionalFontData ../Cuis-University-Installer/linux64/AdditionalFontData
+cp -R AdditionalFontData ../Cuis-University-Installer/windows32/AdditionalFontData
+cp -R AdditionalFontData ../Cuis-University-Installer/windows64/AdditionalFontData
+cp -R AdditionalFontData ../Cuis-University-Installer/macos64/AdditionalFontData
 
 cd ../Cuis-University-Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'

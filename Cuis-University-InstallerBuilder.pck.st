@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 6 August 2018 at 1:29:29 am'!
-'Description Changes to generate same 32 bit for windows and linux'!
-!provides: 'Cuis-University-InstallerBuilder' 1 3!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 28 February 2019 at 11:27:48 pm'!
+'Description Changes to support LiveTyping'!
+!provides: 'Cuis-University-InstallerBuilder' 1 4!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -34,7 +34,7 @@ cuisVersionNumber
 	
 	^versionNumber ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 01:14:39'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 2/28/2019 22:52:55'!
 generate32BitImageBuilderScriptWith: versionNumber
 
 	"self generate32BitImageBuilderScriptWith: '3283'"
@@ -42,13 +42,14 @@ generate32BitImageBuilderScriptWith: versionNumber
 	self 
 		generate: '3-build32Image.sh' 
 		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
+		liveTypingVMPath: '../SqueakLiveTyping32.app/Contents/MacOS/Squeak' 
 		imageNameTail: '-32' 
 		platforms: #('windows32' 'linux32') 
 		pathSeparator: '/' 
 		with: versionNumber
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 01:06:27'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 2/28/2019 22:51:01'!
 generate64BitImageBuilderScriptWith: versionNumber
 
 	"self generate64BitImageBuilderScriptWith: '3283'"
@@ -56,6 +57,7 @@ generate64BitImageBuilderScriptWith: versionNumber
 	self 
 		generate: '2-build64Image.sh' 
 		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
+		liveTypingVMPath: '../SqueakLiveTyping.app/Contents/MacOS/Squeak' 
 		imageNameTail: '' 
 		platforms: #('macos64' 'linux64' 'windows64') 
 		pathSeparator: '/' 
@@ -142,18 +144,20 @@ addCopyImageTo: fileStream on: osDir imageNameTail: tail pathSeparator: pathSepa
 		nextPutAll: '.* ';
 		nextPutAll: osDir ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 4/1/2018 00:34:23'!
-addCuisUniversityInstallationTo: fileStream vmPath: vmPath imageNameTail: tail with: versionNumber
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 2/28/2019 23:14:25'!
+addExecutionOf: aScriptFileName to: fileStream vmPath: vmPath imageNameHead: header imageNameTail: tail with: versionNumber
 
 	fileStream
 		nextPutAll: vmPath;
-		nextPutAll: ' Cuis5.0-';
+		nextPut: Character space;
+		nextPutAll: header;
 		nextPutAll: versionNumber;
 		nextPutAll: tail;
-		nextPutAll: '.image -s CuisUniversityInstallation.st'.! !
+		nextPutAll: '.image -s ';
+		nextPutAll: aScriptFileName .! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 4/1/2018 00:44:37'!
-generate: scriptName vmPath: vmPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 2/28/2019 23:13:29'!
+generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
 
 	"self generate: '4-build32LinuxImage.sh' vmPath: 'linux32/vm/squeak' imageNameTail: '-V3' platforms: #('linux32') pathSeparator: '/' with: '3283'"
 	
@@ -165,7 +169,9 @@ generate: scriptName vmPath: vmPath imageNameTail: tail platforms: platforms pat
 	fileStream ifNil: [ self error: 'Could not create ', scriptName ].
 
 	[ fileStream truncate. 
-	self addCuisUniversityInstallationTo: fileStream vmPath: vmPath imageNameTail: tail with: versionNumber.
+	self addExecutionOf: 'CuisUniversityInstallation.st' to: fileStream vmPath: vmPath imageNameHead: 'Cuis5.0-' imageNameTail: tail with: versionNumber.
+	fileStream newLine.
+	self addExecutionOf: 'CuisUniversityInitializationWithLiveTypingVM.st' to: fileStream vmPath: liveTypingVMPath imageNameHead: 'CuisUniversity-' imageNameTail: tail with: versionNumber.
 	platforms do: [ :osDir | self addCopyImageTo: fileStream on: osDir imageNameTail: tail pathSeparator: pathSeparator with: versionNumber]
 	] ensure: [ fileStream close ].
 
