@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 28 February 2019 at 11:27:48 pm'!
-'Description Changes to support LiveTyping'!
-!provides: 'Cuis-University-InstallerBuilder' 1 4!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 2 July 2019 at 6:39:20 am'!
+'Description Change to support generation for 32 bits even no live typing vm exist for 32 bits'!
+!provides: 'Cuis-University-InstallerBuilder' 1 5!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -34,15 +34,17 @@ cuisVersionNumber
 	
 	^versionNumber ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 2/28/2019 22:52:55'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 7/1/2019 09:41:38'!
 generate32BitImageBuilderScriptWith: versionNumber
 
-	"self generate32BitImageBuilderScriptWith: '3283'"
+	"self generate32BitImageBuilderScriptWith: '3283'
+	There is no 32 bits LiveTyping VM
+	"
 	
 	self 
 		generate: '3-build32Image.sh' 
 		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
-		liveTypingVMPath: '../SqueakLiveTyping32.app/Contents/MacOS/Squeak' 
+		liveTypingVMPath: nil 
 		imageNameTail: '-32' 
 		platforms: #('windows32' 'linux32') 
 		pathSeparator: '/' 
@@ -156,7 +158,7 @@ addExecutionOf: aScriptFileName to: fileStream vmPath: vmPath imageNameHead: hea
 		nextPutAll: '.image -s ';
 		nextPutAll: aScriptFileName .! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 2/28/2019 23:13:29'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 7/1/2019 09:41:22'!
 generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
 
 	"self generate: '4-build32LinuxImage.sh' vmPath: 'linux32/vm/squeak' imageNameTail: '-V3' platforms: #('linux32') pathSeparator: '/' with: '3283'"
@@ -171,7 +173,8 @@ generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageName
 	[ fileStream truncate. 
 	self addExecutionOf: 'CuisUniversityInstallation.st' to: fileStream vmPath: vmPath imageNameHead: 'Cuis5.0-' imageNameTail: tail with: versionNumber.
 	fileStream newLine.
-	self addExecutionOf: 'CuisUniversityInitializationWithLiveTypingVM.st' to: fileStream vmPath: liveTypingVMPath imageNameHead: 'CuisUniversity-' imageNameTail: tail with: versionNumber.
+	liveTypingVMPath ifNotNil: [ 
+		self addExecutionOf: 'CuisUniversityInitializationWithLiveTypingVM.st' to: fileStream vmPath: liveTypingVMPath imageNameHead: 'CuisUniversity-' imageNameTail: tail with: versionNumber ].
 	platforms do: [ :osDir | self addCopyImageTo: fileStream on: osDir imageNameTail: tail pathSeparator: pathSeparator with: versionNumber]
 	] ensure: [ fileStream close ].
 
