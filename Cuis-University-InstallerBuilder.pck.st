@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 2 July 2019 at 6:39:20 am'!
-'Description Change to support generation for 32 bits even no live typing vm exist for 32 bits'!
-!provides: 'Cuis-University-InstallerBuilder' 1 5!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 29 October 2019 at 7:40:31 pm'!
+'Description Image update atomatization'!
+!provides: 'Cuis-University-InstallerBuilder' 1 8!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -20,12 +20,12 @@ cuisSmalltalkDevDirName
 	
 	^'../Cuis-Smalltalk-Dev'! !
 
-!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 4/15/2018 20:02:31'!
-cuisVersionNumber
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 10/29/2019 19:36:02'!
+cuisVersionNumberIn: aDirName
 
 	| cuisSmalltalkDevDir fileNames imageName versionNumber |
 	
-	cuisSmalltalkDevDir := self cuisSmalltalkDevDirName asDirectoryEntry.
+	cuisSmalltalkDevDir := aDirName asDirectoryEntry.
 	fileNames := (cuisSmalltalkDevDir fileNamesMatching: 'Cuis5.0-*.image') asSortedCollection: [:fileNameLeft :fileNameRight | fileNameLeft size < fileNameRight size ].
 	fileNames isEmpty ifTrue: [ self error: 'Image file not found' ].
 	
@@ -33,6 +33,40 @@ cuisVersionNumber
 	versionNumber := imageName copyFrom: 'Cuis5.0-' size + 1 to: (imageName indexOfSubCollection: '.image' startingAt: 1) - 1.
 	
 	^versionNumber ! !
+
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 10/29/2019 19:40:00'!
+cuisVersionNumberInCuisDev
+
+	^self cuisVersionNumberIn: self cuisSmalltalkDevDirName
+	! !
+
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 10/29/2019 19:40:04'!
+cuisVersionNumberInLocalDir
+
+	^self cuisVersionNumberIn: '.'
+	! !
+
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:02:30'!
+add32BitUpdateLineTo: fileStream with: versionNumber
+		
+	self 
+		addExecutionOf: '../Installer/updateImage.st' 
+		to: fileStream 
+		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
+		imageNameHead: 'Cuis5.0-' 
+		imageNameTail: '-32'
+		with: versionNumber.! !
+
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:02:11'!
+add64BitUpdateLineTo: fileStream with: versionNumber
+		
+	self 
+		addExecutionOf: '../Installer/updateImage.st' 
+		to: fileStream 
+		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
+		imageNameHead: 'Cuis5.0-' 
+		imageNameTail: ''
+		with: versionNumber.! !
 
 !CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 7/1/2019 09:41:38'!
 generate32BitImageBuilderScriptWith: versionNumber
@@ -77,14 +111,14 @@ generateRunScriptsWith: versionNumber
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 00:57:02'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:36:55'!
 generateScripts
 
 	"self generateScripts"
 	
 	| versionNumber |
 	
-	versionNumber := self cuisVersionNumber.
+	versionNumber := self cuisVersionNumberInLocalDir.
 	
 	self 
 		generate64BitImageBuilderScriptWith: versionNumber;
@@ -98,6 +132,33 @@ generateScriptsAndExit
 
 	self generateScripts.
 	Smalltalk snapshot: true andQuit: true! !
+
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:36:45'!
+generateUpdateImagesScriptAndExit
+
+	self generateUpdateImagesScriptWith: self cuisVersionNumberInCuisDev. 
+	Smalltalk snapshot: true andQuit: true! !
+
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:01:42'!
+generateUpdateImagesScriptWith: versionNumber
+
+	"self generateUpdateImagesScriptWith: '3283'"
+	
+	| fileStream |
+	
+	fileStream := FileStream concreteStream new 
+		open:  '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/updateImages.sh'  
+		forWrite: true.
+	fileStream ifNil: [ self error: 'Could not create updateImages.sh' ].
+
+	[ fileStream truncate. 
+	fileStream nextPutAll: 'cd ../Cuis-Smalltalk-Dev'; newLine.
+	self add64BitUpdateLineTo: fileStream with: versionNumber.
+	fileStream newLine.
+	self add32BitUpdateLineTo: fileStream with: versionNumber ] 
+		ensure: [ fileStream close ].
+
+		! !
 
 !CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 00:59:58'!
 generateZipScript	

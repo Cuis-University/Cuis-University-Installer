@@ -29,10 +29,27 @@ rm -R windows32/AdditionalFontData
 rm -R windows64/AdditionalFontData
 rm -R macos64/AdditionalFontData
 
+cd ../Cuis-Smalltalk-Refactoring
+git pull
+
+cd ../Cuis-Smalltalk-Refactorings-Thesis
+git pull
+
+cd ../TDDGuru
+git pull
+
 cd ../Cuis-Smalltalk-Dev
 git pull
-cp Cuis5.0-*.image ../Cuis-University-Installer
-cp Cuis5.0-*.changes ../Cuis-University-Installer
+
+cd ../Installer
+../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
+./updateImages.sh
+chmod +x copy64ImageFromDev.sh
+chmod +x copy32ImageFromDev.sh
+./copy64ImageFromDev.sh
+./copy32ImageFromDev.sh
+
+cd ../Cuis-Smalltalk-Dev
 
 cp -R Packages ../Cuis-University-Installer/linux32/Packages
 cp -R Packages ../Cuis-University-Installer/linux64/Packages
@@ -81,6 +98,24 @@ cp ../Cuis-University/Cuis-University-Tests.pck.st ../Cuis-University-Installer/
 cp ../Cuis-University/Cuis-University-Tests.pck.st ../Cuis-University-Installer/windows32/Packages
 cp ../Cuis-University/Cuis-University-Tests.pck.st ../Cuis-University-Installer/windows64/Packages
 cp ../Cuis-University/Cuis-University-Tests.pck.st ../Cuis-University-Installer/macos64/Packages
+
+cp ../TDDGuru/*.pck.st ../Cuis-University-Installer/linux32/Packages
+cp ../TDDGuru/*.pck.st ../Cuis-University-Installer/linux64/Packages
+cp ../TDDGuru/*.pck.st ../Cuis-University-Installer/windows32/Packages
+cp ../TDDGuru/*.pck.st ../Cuis-University-Installer/windows64/Packages
+cp ../TDDGuru/*.pck.st ../Cuis-University-Installer/macos64/Packages
+
+cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/linux32/Packages
+cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/linux64/Packages
+cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/windows32/Packages
+cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/windows64/Packages
+cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/macos64/Packages
+
+cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux32/Packages
+cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux64/Packages
+cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows32/Packages
+cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows64/Packages
+cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/macos64/Packages
 
 cp -R Documentation ../Cuis-University-Installer/linux32/Documentation
 cp -R Documentation ../Cuis-University-Installer/linux64/Documentation
