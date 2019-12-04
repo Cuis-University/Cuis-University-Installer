@@ -1,3 +1,27 @@
+VM_64=../Squeak.app/Contents/MacOS/Squeak
+if [ -f "$VM_64" ]; then
+    echo "64 VM Found"
+else
+    echo "64 VM does not exist. It should be at $VM_64"
+    exit 1
+fi
+
+VM_32=../Squeak32.app/Contents/MacOS/Squeak
+if [ -f "$VM_32" ]; then
+  echo "32 VM Found"
+else
+    echo "32 VM does not exist. It should be at $VM_32"
+    exit 1
+fi
+
+VM_LiveTyping=../SqueakLiveTyping.app/Contents/MacOS/Squeak
+if [ -f "$VM_LiveTyping" ]; then
+  echo "LiveTyping VM Found"
+else
+    echo "LiveTyping VM does not exist. It should be at $VM_LiveTyping"
+    exit 1
+fi
+
 rm *.zip
 rm *.tar.gz
 rm Cuis5.0-*.image
@@ -43,6 +67,7 @@ git pull
 
 cd ../Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
+chmod +x updateImages.sh
 ./updateImages.sh
 chmod +x copy64ImageFromDev.sh
 chmod +x copy32ImageFromDev.sh
@@ -137,3 +162,6 @@ cp -R AdditionalFontData ../Cuis-University-Installer/macos64/AdditionalFontData
 
 cd ../Cuis-University-Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
+chmod +x 2-build64Image.sh
+chmod +x 3-build32Image.sh
+chmod +x 4-zip.sh

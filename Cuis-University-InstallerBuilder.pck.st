@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 29 October 2019 at 7:40:31 pm'!
-'Description Image update atomatization'!
-!provides: 'Cuis-University-InstallerBuilder' 1 8!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 4 December 2019 at 2:19:24 pm'!
+'Description Removed absolute paths'!
+!provides: 'Cuis-University-InstallerBuilder' 1 9!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -139,7 +139,7 @@ generateUpdateImagesScriptAndExit
 	self generateUpdateImagesScriptWith: self cuisVersionNumberInCuisDev. 
 	Smalltalk snapshot: true andQuit: true! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:01:42'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 12/4/2019 12:21:04'!
 generateUpdateImagesScriptWith: versionNumber
 
 	"self generateUpdateImagesScriptWith: '3283'"
@@ -147,7 +147,7 @@ generateUpdateImagesScriptWith: versionNumber
 	| fileStream |
 	
 	fileStream := FileStream concreteStream new 
-		open:  '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/updateImages.sh'  
+		open:  'updateImages.sh'  
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create updateImages.sh' ].
 
@@ -160,13 +160,13 @@ generateUpdateImagesScriptWith: versionNumber
 
 		! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 8/6/2018 00:59:58'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 12/4/2019 12:28:53'!
 generateZipScript	
 	
 	| fileStream  |
 		
 	fileStream := FileStream concreteStream new 
-		open: '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/4-zip.sh' 
+		open: '4-zip.sh' 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create zip script file' ].
 
