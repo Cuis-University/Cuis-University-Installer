@@ -16,3 +16,7 @@ windows64
 vms
 UTF*
 test.jpg
+copy32ImageFromDev.sh
+copy64ImageFromDev.sh
+crash.dmp
+updateImages.sh
