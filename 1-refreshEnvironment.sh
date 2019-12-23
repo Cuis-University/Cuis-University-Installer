@@ -136,11 +136,11 @@ cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/windows32
 cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/windows64/Packages
 cp ../Cuis-Smalltalk-Refactoring/*.pck.st ../Cuis-University-Installer/macos64/Packages
 
-cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux32/Packages
-cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux64/Packages
-cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows32/Packages
-cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows64/Packages
-cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/macos64/Packages
+#cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux32/Packages
+#cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/linux64/Packages
+#cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows32/Packages
+#cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/windows64/Packages
+#cp ../Cuis-Smalltalk-Refactorings-Thesis/*.pck.st ../Cuis-University-Installer/macos64/Packages
 
 cp -R Documentation ../Cuis-University-Installer/linux32/Documentation
 cp -R Documentation ../Cuis-University-Installer/linux64/Documentation
