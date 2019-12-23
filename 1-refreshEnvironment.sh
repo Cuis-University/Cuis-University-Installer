@@ -56,11 +56,11 @@ rm -R macos64/AdditionalFontData
 cd ../Cuis-Smalltalk-Refactoring
 git pull
 
-cd ../Cuis-Smalltalk-Refactorings-Thesis
-git pull
+# cd ../Cuis-Smalltalk-Refactorings-Thesis
+# git pull
 
-cd ../TDDGuru
-git pull
+# cd ../TDDGuru
+# git pull
 
 cd ../Cuis-Smalltalk-Dev
 git pull
