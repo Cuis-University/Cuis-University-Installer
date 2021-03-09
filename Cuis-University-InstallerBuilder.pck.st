@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 4 December 2019 at 2:19:24 pm'!
-'Description Removed absolute paths'!
-!provides: 'Cuis-University-InstallerBuilder' 1 9!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 22 January 2021 at 10:45:53 am'!
+'Description jit vm scripts'!
+!provides: 'Cuis-University-InstallerBuilder' 1 10!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -271,52 +271,84 @@ generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versi
 
 ! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 8/6/2018 01:19:29'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:45:28'!
 generateLinux32RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'linux32/run.sh'
 		vmPath: 'vm/squeak'
 		imageNameTail: '-32'
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'linux32/run-jit.sh'
+		vmPath: 'vm/squeak-jit'
+		imageNameTail: '-32'
 		with: versionNumber! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:54:55'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:45:06'!
 generateLinux64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'linux64/run.sh'
 		vmPath: 'vm/squeak'
 		imageNameTail: ''
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'linux64/run-jit.sh'
+		vmPath: 'vm/squeak-jit'
+		imageNameTail: ''
 		with: versionNumber
+
 		
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:54:17'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:40:04'!
 generateMacOs64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'macos64/run.sh'
-		vmPath: 'CocoaFast64.app/Contents/MacOS/Squeak'
+		vmPath: 'Squeak.app/Contents/MacOS/Squeak'
+		imageNameTail: ''
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'macos64/run-jit.sh'
+		vmPath: 'Squeak-jit.app/Contents/MacOS/Squeak'
 		imageNameTail: ''
 		with: versionNumber! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:55:55'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:44:45'!
 generateWindow32RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'windows32/run.bat'
 		vmPath: 'vm\squeak'
 		imageNameTail: '-32'
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'windows32/run-jit.bat'
+		vmPath: 'vm\squeak-jit'
+		imageNameTail: '-32'
 		with: versionNumber
+
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 4/1/2018 00:55:27'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:44:22'!
 generateWindow64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'windows64/run.bat'
 		vmPath: 'vm\squeak'
 		imageNameTail: ''
-		with: versionNumber
+		with: versionNumber.
+
+	self 
+		generateRunScript: 'windows64/run-jit.bat'
+		vmPath: 'vm\squeak-jit'
+		imageNameTail: ''
+		with: versionNumber.
 ! !

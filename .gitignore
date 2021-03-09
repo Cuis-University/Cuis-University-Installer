@@ -20,3 +20,5 @@ copy32ImageFromDev.sh
 copy64ImageFromDev.sh
 crash.dmp
 updateImages.sh
+TheCuisBook.pdf
+vms-old/
