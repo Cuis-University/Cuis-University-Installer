@@ -1,3 +1,4 @@
+
 VM_64=../Squeak.app/Contents/MacOS/Squeak
 if [ -f "$VM_64" ]; then
     echo "64 VM Found"
