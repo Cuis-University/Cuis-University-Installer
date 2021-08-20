@@ -12,6 +12,6 @@ ChangeSet installNewUpdates.
     'mv ', Smalltalk defaultChangesName, ' .', String newLineString,
     'mv ', Smalltalk defaultUserChangesName, ' .'.
 
-Smalltalk snapshot: true andQuit: true clearAllClassState: false ] fork.
+Smalltalk snapshot: true andQuit: true embedded: false clearAllClassState: false ] fork.
 
 Smalltalk saveAsNewVersion.
