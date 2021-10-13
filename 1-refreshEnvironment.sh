@@ -70,6 +70,9 @@ git pull
 cd ../cuis-finder
 git pull
 
+cd ../cuis-finder-asWidget
+git pull
+
 cd ../cuis-code-coverage
 git pull
 
