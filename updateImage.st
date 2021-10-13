@@ -14,4 +14,4 @@ ChangeSet installNewUpdates.
 
 Smalltalk snapshot: true andQuit: true embedded: false clearAllClassState: false ] fork.
 
-Smalltalk saveAsNewVersion.
+Smalltalk saveAsNewReleaseAndStay.
