@@ -61,6 +61,15 @@ cp TheCuisBook.pdf windows64
 cp TheCuisBook.pdf linux32
 cp TheCuisBook.pdf windows32
 
+cd ../Cuis-University
+git pull
+
+cd ../LiveTyping
+git pull
+
+cd ../Cuis-Smalltalk-DenotativeObject
+git pull
+
 cd ../Cuis-Smalltalk-Refactoring
 git pull
 
