@@ -24,8 +24,8 @@ fi
 
 rm *.zip
 rm *.tar.gz
-rm Cuis5.0-*.image
-rm Cuis5.0-*.changes
+rm Cuis6.0-*.image
+rm Cuis6.0-*.changes
 rm CuisUniversity*.image
 rm CuisUniversity*.changes
 rm TheCuisBook.pdf
