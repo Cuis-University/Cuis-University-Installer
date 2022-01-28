@@ -1,6 +1,6 @@
 | newImageName |
 
-CodePackageFile installPackage: '../Cuis-University/Cuis-University-Tests.pck.st' asFileEntry.
+CodePackageFile installPackage: '../Cuis-University/CuisUniversity.pck.st' asFileEntry.
 
 newImageName := Smalltalk imageName asFileEntry name copyReplaceAll: 'Cuis6.0' with: 'CuisUniversity'.
 
