@@ -88,7 +88,7 @@ git pull
 cd ../cuis-system-updater
 git pull
 
-cd ../CategoryAutoSave
+cd ../SystemCategoryAutoSaving
 git pull
 
 cd ../Cuis-Smalltalk-Dev
@@ -191,11 +191,11 @@ rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/w
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/macos64/Packages
 
-rsync -r --exclude '.git*' ../CategoryAutoSave ../Cuis-University-Installer/linux32/Packages
-rsync -r --exclude '.git*' ../CategoryAutoSave ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../CategoryAutoSave ../Cuis-University-Installer/windows32/Packages
-rsync -r --exclude '.git*' ../CategoryAutoSave ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../CategoryAutoSave ../Cuis-University-Installer/macos64/Packages
+rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/linux32/Packages
+rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/windows32/Packages
+rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/macos64/Packages
 
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/linux32/Packages
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/linux64/Packages
