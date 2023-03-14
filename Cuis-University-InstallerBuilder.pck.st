@@ -1,16 +1,16 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 14 March 2023 at 2:00:48 pm'!
-'Description new vm scripts'!
-!provides: 'Cuis-University-InstallerBuilder' 1 12!
-SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
+'From Cuis 6.0 [latest update: #5688] on 14 March 2023 at 2:23:59 pm'!
+'Description update to version 5688'!
+!provides: 'Cuis-University-InstallerBuilder' 1 14!
+SystemOrganization addCategory: 'Cuis-University-InstallerBuilder'!
 
 
-!classDefinition: #CuisInstallerBuilder category: #'Cuis-University-InstallerBuilder'!
+!classDefinition: #CuisInstallerBuilder category: 'Cuis-University-InstallerBuilder'!
 Object subclass: #CuisInstallerBuilder
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'Cuis-University-InstallerBuilder'!
-!classDefinition: 'CuisInstallerBuilder class' category: #'Cuis-University-InstallerBuilder'!
+!classDefinition: 'CuisInstallerBuilder class' category: 'Cuis-University-InstallerBuilder'!
 CuisInstallerBuilder class
 	instanceVariableNames: ''!
 
@@ -127,26 +127,26 @@ generateScripts
 		generateZipScript
 ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/31/2018 12:51:34'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:21:13'!
 generateScriptsAndExit
 
 	self generateScripts.
-	Smalltalk snapshot: true andQuit: true! !
+	Smalltalk saveAndQuit ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:36:45'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:23:51'!
 generateUpdateImagesScriptAndExit
 
 	self generateUpdateImagesScriptWith: self cuisVersionNumberInCuisDev. 
-	Smalltalk snapshot: true andQuit: true! !
+	Smalltalk saveAndQuit ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 12/4/2019 12:21:04'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:19:40'!
 generateUpdateImagesScriptWith: versionNumber
 
 	"self generateUpdateImagesScriptWith: '3283'"
 	
 	| fileStream |
 	
-	fileStream := FileStream concreteStream new 
+	fileStream := UniFileStream new 
 		open:  'updateImages.sh'  
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create updateImages.sh' ].
@@ -160,12 +160,12 @@ generateUpdateImagesScriptWith: versionNumber
 
 		! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 12/4/2019 12:28:53'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:19:46'!
 generateZipScript	
 	
 	| fileStream  |
 		
-	fileStream := FileStream concreteStream new 
+	fileStream := UniFileStream new 
 		open: '4-zip.sh' 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create zip script file' ].
@@ -219,14 +219,14 @@ addExecutionOf: aScriptFileName to: fileStream vmPath: vmPath imageNameHead: hea
 		nextPutAll: '.image -s ';
 		nextPutAll: aScriptFileName .! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 1/25/2022 15:53:19'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 3/14/2023 14:19:06'!
 generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
 
 	"self generate: '4-build32LinuxImage.sh' vmPath: 'linux32/vm/squeak' imageNameTail: '-V3' platforms: #('linux32') pathSeparator: '/' with: '3283'"
 	
 	| fileStream  |
 		
-	fileStream := FileStream concreteStream new 
+	fileStream := UniFileStream new 
 		open:  '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/', scriptName 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create ', scriptName ].
@@ -241,14 +241,14 @@ generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageName
 
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 4/1/2018 00:53:18'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 3/14/2023 14:19:26'!
 generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versionNumber
 	
 	"self generateRunScript: macos64/run.sh' vmPath: 'CocoaFast64.app/Contents/MacOS/Squeak' imageNameTail: '' with: '32'"
 	
 	| fileStream |
 	
-	fileStream := FileStream concreteStream new 
+	fileStream := UniFileStream new 
 		open: '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/', scriptFileName  
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create ', scriptFileName ].
