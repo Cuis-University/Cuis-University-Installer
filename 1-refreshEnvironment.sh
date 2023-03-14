@@ -91,6 +91,9 @@ git pull
 cd ../SystemCategoryAutoSaving
 git pull
 
+cd ../cuis-move-instance-variable-refactoring
+git pull
+
 cd ../Cuis-Smalltalk-Dev
 git pull
 
@@ -184,6 +187,12 @@ rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/li
 rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/windows32/Packages
 rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/macos64/Packages
+
+rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/linux32/Packages
+rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/windows32/Packages
+rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/macos64/Packages
 
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/linux32/Packages
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/linux64/Packages

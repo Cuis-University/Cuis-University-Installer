@@ -1,6 +1,6 @@
-'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 25 January 2022 at 3:54:30 pm'!
-'Description jit vm scripts'!
-!provides: 'Cuis-University-InstallerBuilder' 1 11!
+'From Cuis 5.0 of 7 November 2016 [latest update: #3285] on 14 March 2023 at 2:00:48 pm'!
+'Description new vm scripts'!
+!provides: 'Cuis-University-InstallerBuilder' 1 12!
 SystemOrganization addCategory: #'Cuis-University-InstallerBuilder'!
 
 
@@ -286,33 +286,58 @@ generateLinux32RunScriptWith: versionNumber
 		imageNameTail: '-32'
 		with: versionNumber! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:45:06'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/14/2023 13:58:45'!
 generateLinux64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'linux64/run.sh'
-		vmPath: 'vm/squeak'
+		vmPath: 'vmLiveTyping/squeak'
+		imageNameTail: ''
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'linux64/run-stack.sh'
+		vmPath: 'vmLiveTyping-Stack/squeak'
+		imageNameTail: ''
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'linux64/run-arm.sh'
+		vmPath: 'vmLiveTyping-ARM/squeak'
 		imageNameTail: ''
 		with: versionNumber.
 		
 	self 
 		generateRunScript: 'linux64/run-jit.sh'
-		vmPath: 'vm/squeak-jit'
+		vmPath: 'vm-jit/squeak'
 		imageNameTail: ''
 		with: versionNumber
 
 		
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:40:04'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/14/2023 14:00:08'!
 generateMacOs64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'macos64/run.sh'
-		vmPath: 'Squeak.app/Contents/MacOS/Squeak'
+		vmPath: 'SqueakLiveTyping.app/Contents/MacOS/Squeak'
 		imageNameTail: ''
 		with: versionNumber.
 		
+	self 
+		generateRunScript: 'macos64/run-stack.sh'
+		vmPath: 'SqueakLiveTyping-Stack.app/Contents/MacOS/Squeak'
+		imageNameTail: ''
+		with: versionNumber.
+		
+	self 
+		generateRunScript: 'macos64/run-arm.sh'
+		vmPath: 'SqueakLiveTyping-ARM.app/Contents/MacOS/Squeak'
+		imageNameTail: ''
+		with: versionNumber.
+		
+
 	self 
 		generateRunScript: 'macos64/run-jit.sh'
 		vmPath: 'Squeak-jit.app/Contents/MacOS/Squeak'
