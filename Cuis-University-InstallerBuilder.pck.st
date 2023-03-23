@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5688] on 14 March 2023 at 2:23:59 pm'!
-'Description update to version 5688'!
-!provides: 'Cuis-University-InstallerBuilder' 1 14!
+'From Cuis 6.0 [latest update: #5688] on 20 March 2023 at 11:12:53 am'!
+'Description Windows run script'!
+!provides: 'Cuis-University-InstallerBuilder' 1 16!
 SystemOrganization addCategory: 'Cuis-University-InstallerBuilder'!
 
 
@@ -362,18 +362,24 @@ generateWindow32RunScriptWith: versionNumber
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:44:22'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/20/2023 11:12:43'!
 generateWindow64RunScriptWith: versionNumber
 	
 	self 
 		generateRunScript: 'windows64/run.bat'
-		vmPath: 'vm\squeak'
+		vmPath: 'vmLiveTyping\squeak'
+		imageNameTail: ''
+		with: versionNumber.
+
+	self 
+		generateRunScript: 'windows64/run-stack.bat'
+		vmPath: 'vmLiveTyping-Stack\squeak'
 		imageNameTail: ''
 		with: versionNumber.
 
 	self 
 		generateRunScript: 'windows64/run-jit.bat'
-		vmPath: 'vm\squeak-jit'
+		vmPath: 'vm-jit\squeak'
 		imageNameTail: ''
 		with: versionNumber.
 ! !
