@@ -10,8 +10,9 @@ ChangeSet installNewUpdates.
   put:
     'mv ', Smalltalk imageName, ' .', String newLineString,
     'mv ', Smalltalk defaultChangesName, ' .', String newLineString,
-    'mv ', Smalltalk defaultUserChangesName, ' .'.
+    'mv ', Smalltalk userChangesFileName, ' .'.
 
 Smalltalk snapshot: true andQuit: true embedded: false clearAllClassState: false ] fork.
 
-Smalltalk saveAsNewReleaseAndStay.
+Smalltalk saveRollingReleaseAndStay.
+ 

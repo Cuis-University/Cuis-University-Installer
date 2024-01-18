@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5688] on 20 March 2023 at 11:12:53 am'!
-'Description Windows run script'!
-!provides: 'Cuis-University-InstallerBuilder' 1 16!
+'From Cuis 6.0 [latest update: #5688] on 17 January 2024 at 8:03:51 pm'!
+'Description Update with version 6163'!
+!provides: 'Cuis-University-InstallerBuilder' 1 17!
 SystemOrganization addCategory: 'Cuis-University-InstallerBuilder'!
 
 
@@ -12,7 +12,7 @@ Object subclass: #CuisInstallerBuilder
 	category: 'Cuis-University-InstallerBuilder'!
 !classDefinition: 'CuisInstallerBuilder class' category: 'Cuis-University-InstallerBuilder'!
 CuisInstallerBuilder class
-	instanceVariableNames: ''!
+	instanceVariableNames: 'nameWithMajorVersionNumber'!
 
 
 !CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 3/31/2018 15:42:24'!
@@ -20,17 +20,19 @@ cuisSmalltalkDevDirName
 	
 	^'../Cuis-Smalltalk-Dev'! !
 
-!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 1/25/2022 15:53:52'!
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 1/17/2024 11:26:03'!
 cuisVersionNumberIn: aDirName
 
-	| cuisSmalltalkDevDir fileNames imageName versionNumber |
+	| cuisSmalltalkDevDir fileNames imageName versionNumber imageNameSplited |
 	
 	cuisSmalltalkDevDir := aDirName asDirectoryEntry.
-	fileNames := (cuisSmalltalkDevDir fileNamesMatching: 'Cuis6.0-*.image') asSortedCollection: [:fileNameLeft :fileNameRight | fileNameLeft size < fileNameRight size ].
+	fileNames := (cuisSmalltalkDevDir fileNamesMatching: 'Cuis*.image') asSortedCollection: [:fileNameLeft :fileNameRight | fileNameLeft size < fileNameRight size ].
 	fileNames isEmpty ifTrue: [ self error: 'Image file not found' ].
 	
 	imageName := fileNames first.
-	versionNumber := imageName copyFrom: 'Cuis6.0-' size + 1 to: (imageName indexOfSubCollection: '.image' startingAt: 1) - 1.
+	imageNameSplited := imageName findTokens: '-'.
+	nameWithMajorVersionNumber := imageNameSplited first.
+	versionNumber := (imageNameSplited second findTokens: '.') first.
 	
 	^versionNumber ! !
 
@@ -46,27 +48,36 @@ cuisVersionNumberInLocalDir
 	^self cuisVersionNumberIn: '.'
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/25/2022 15:51:36'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/17/2024 11:27:43'!
 add32BitUpdateLineTo: fileStream with: versionNumber
-		
+
+	self assertNameWithMajorVersionNumberIsDefined.
+	
 	self 
 		addExecutionOf: '../Installer/updateImage.st' 
 		to: fileStream 
 		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
-		imageNameHead: 'Cuis6.0-' 
+		imageNameHead: nameWithMajorVersionNumber, '-' 
 		imageNameTail: '-32'
 		with: versionNumber.! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/25/2022 15:53:05'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/17/2024 11:28:19'!
 add64BitUpdateLineTo: fileStream with: versionNumber
 		
+	self assertNameWithMajorVersionNumberIsDefined.
+
 	self 
 		addExecutionOf: '../Installer/updateImage.st' 
 		to: fileStream 
 		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
-		imageNameHead: 'Cuis6.0-' 
+		imageNameHead: nameWithMajorVersionNumber, '-' 
 		imageNameTail: ''
 		with: versionNumber.! !
+
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/17/2024 11:27:55'!
+assertNameWithMajorVersionNumberIsDefined
+		
+	nameWithMajorVersionNumber ifNil: [ self error: 'nameWithMajorVersionNumber no está definido' ]! !
 
 !CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 7/1/2019 09:41:38'!
 generate32BitImageBuilderScriptWith: versionNumber
@@ -219,20 +230,22 @@ addExecutionOf: aScriptFileName to: fileStream vmPath: vmPath imageNameHead: hea
 		nextPutAll: '.image -s ';
 		nextPutAll: aScriptFileName .! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 3/14/2023 14:19:06'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 1/17/2024 11:28:55'!
 generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
 
 	"self generate: '4-build32LinuxImage.sh' vmPath: 'linux32/vm/squeak' imageNameTail: '-V3' platforms: #('linux32') pathSeparator: '/' with: '3283'"
 	
 	| fileStream  |
 		
+	self assertNameWithMajorVersionNumberIsDefined.
+	
 	fileStream := UniFileStream new 
 		open:  '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/', scriptName 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create ', scriptName ].
 
 	[ fileStream truncate. 
-	self addExecutionOf: 'CuisUniversityInstallation.st' to: fileStream vmPath: vmPath imageNameHead: 'Cuis6.0-' imageNameTail: tail with: versionNumber.
+	self addExecutionOf: 'CuisUniversityInstallation.st' to: fileStream vmPath: vmPath imageNameHead: nameWithMajorVersionNumber, '-'  imageNameTail: tail with: versionNumber.
 	fileStream newLine.
 	liveTypingVMPath ifNotNil: [ 
 		self addExecutionOf: 'CuisUniversityInitializationWithLiveTypingVM.st' to: fileStream vmPath: liveTypingVMPath imageNameHead: 'CuisUniversity-' imageNameTail: tail with: versionNumber ].

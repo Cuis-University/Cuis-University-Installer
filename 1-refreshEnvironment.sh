@@ -98,7 +98,7 @@ cd ../Cuis-Smalltalk-Dev
 git pull
 
 ./pullAllRepos.sh
-
+ 
 cd ../Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
 chmod +x updateImages.sh
