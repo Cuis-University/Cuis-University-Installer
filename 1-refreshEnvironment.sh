@@ -24,8 +24,8 @@ fi
 
 rm *.zip
 rm *.tar.gz
-rm Cuis6.0-*.image
-rm Cuis6.0-*.changes
+rm Cuis6*.image
+rm Cuis6*.changes
 rm CuisUniversity*.image
 rm CuisUniversity*.changes
 rm TheCuisBook.pdf
@@ -98,7 +98,7 @@ cd ../Cuis-Smalltalk-Dev
 git pull
 
 ./pullAllRepos.sh
- 
+
 cd ../Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
 chmod +x updateImages.sh
