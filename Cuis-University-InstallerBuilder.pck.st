@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5688] on 17 January 2024 at 8:03:51 pm'!
-'Description Update with version 6163'!
-!provides: 'Cuis-University-InstallerBuilder' 1 17!
+'From Cuis 6.0 [latest update: #5688] on 30 March 2024 at 5:56:48 pm'!
+'Description Update with version 6291'!
+!provides: 'Cuis-University-InstallerBuilder' 1 19!
 SystemOrganization addCategory: 'Cuis-University-InstallerBuilder'!
 
 
@@ -14,11 +14,6 @@ Object subclass: #CuisInstallerBuilder
 CuisInstallerBuilder class
 	instanceVariableNames: 'nameWithMajorVersionNumber'!
 
-
-!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 3/31/2018 15:42:24'!
-cuisSmalltalkDevDirName
-	
-	^'../Cuis-Smalltalk-Dev'! !
 
 !CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 1/17/2024 11:26:03'!
 cuisVersionNumberIn: aDirName
@@ -36,10 +31,10 @@ cuisVersionNumberIn: aDirName
 	
 	^versionNumber ! !
 
-!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 10/29/2019 19:40:00'!
+!CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 3/30/2024 17:13:49'!
 cuisVersionNumberInCuisDev
 
-	^self cuisVersionNumberIn: self cuisSmalltalkDevDirName
+	^self cuisVersionNumberIn: (self cuisSmalltalkDevDirName, self cuisImageDirName)
 	! !
 
 !CuisInstallerBuilder class methodsFor: 'version number' stamp: 'HAW 10/29/2019 19:40:04'!
@@ -48,28 +43,15 @@ cuisVersionNumberInLocalDir
 	^self cuisVersionNumberIn: '.'
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/17/2024 11:27:43'!
-add32BitUpdateLineTo: fileStream with: versionNumber
-
-	self assertNameWithMajorVersionNumberIsDefined.
-	
-	self 
-		addExecutionOf: '../Installer/updateImage.st' 
-		to: fileStream 
-		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
-		imageNameHead: nameWithMajorVersionNumber, '-' 
-		imageNameTail: '-32'
-		with: versionNumber.! !
-
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 1/17/2024 11:28:19'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:55:53'!
 add64BitUpdateLineTo: fileStream with: versionNumber
 		
 	self assertNameWithMajorVersionNumberIsDefined.
 
 	self 
-		addExecutionOf: '../Installer/updateImage.st' 
+		addExecutionOf: '../../Installer/updateImage.st' 
 		to: fileStream 
-		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
+		vmPath: '../CuisVM.app/Contents/MacOS/Squeak' 
 		imageNameHead: nameWithMajorVersionNumber, '-' 
 		imageNameTail: ''
 		with: versionNumber.! !
@@ -79,31 +61,14 @@ assertNameWithMajorVersionNumberIsDefined
 		
 	nameWithMajorVersionNumber ifNil: [ self error: 'nameWithMajorVersionNumber no está definido' ]! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 7/1/2019 09:41:38'!
-generate32BitImageBuilderScriptWith: versionNumber
-
-	"self generate32BitImageBuilderScriptWith: '3283'
-	There is no 32 bits LiveTyping VM
-	"
-	
-	self 
-		generate: '3-build32Image.sh' 
-		vmPath: '../Squeak32.app/Contents/MacOS/Squeak' 
-		liveTypingVMPath: nil 
-		imageNameTail: '-32' 
-		platforms: #('windows32' 'linux32') 
-		pathSeparator: '/' 
-		with: versionNumber
-	! !
-
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 2/28/2019 22:51:01'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:39:39'!
 generate64BitImageBuilderScriptWith: versionNumber
 
 	"self generate64BitImageBuilderScriptWith: '3283'"
 	
 	self 
 		generate: '2-build64Image.sh' 
-		vmPath: '../Squeak.app/Contents/MacOS/Squeak' 
+		vmPath: '../Cuis-Smalltalk-Dev/CuisVM.app/Contents/MacOS/Squeak' 
 		liveTypingVMPath: '../SqueakLiveTyping.app/Contents/MacOS/Squeak' 
 		imageNameTail: '' 
 		platforms: #('macos64' 'linux64' 'windows64') 
@@ -111,18 +76,16 @@ generate64BitImageBuilderScriptWith: versionNumber
 		with: versionNumber
 		! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 4/1/2018 00:18:09'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:43:21'!
 generateRunScriptsWith: versionNumber
 
 	self generateWindow64RunScriptWith: versionNumber.
-	self generateWindow32RunScriptWith: versionNumber.
 	self generateLinux64RunScriptWith: versionNumber.
-	self generateLinux32RunScriptWith: versionNumber.
 	self generateMacOs64RunScriptWith: versionNumber.
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 10/29/2019 19:36:55'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:38:47'!
 generateScripts
 
 	"self generateScripts"
@@ -133,7 +96,6 @@ generateScripts
 	
 	self 
 		generate64BitImageBuilderScriptWith: versionNumber;
-		generate32BitImageBuilderScriptWith: versionNumber;
 		generateRunScriptsWith: versionNumber;
 		generateZipScript
 ! !
@@ -150,7 +112,7 @@ generateUpdateImagesScriptAndExit
 	self generateUpdateImagesScriptWith: self cuisVersionNumberInCuisDev. 
 	Smalltalk saveAndQuit ! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:19:40'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:25:37'!
 generateUpdateImagesScriptWith: versionNumber
 
 	"self generateUpdateImagesScriptWith: '3283'"
@@ -163,15 +125,14 @@ generateUpdateImagesScriptWith: versionNumber
 	fileStream ifNil: [ self error: 'Could not create updateImages.sh' ].
 
 	[ fileStream truncate. 
-	fileStream nextPutAll: 'cd ../Cuis-Smalltalk-Dev'; newLine.
+	fileStream nextPutAll: 'cd '; nextPutAll: self cuisSmalltalkDevDirName; nextPutAll: self cuisImageDirName; newLine.
 	self add64BitUpdateLineTo: fileStream with: versionNumber.
-	fileStream newLine.
-	self add32BitUpdateLineTo: fileStream with: versionNumber ] 
+	fileStream newLine ] 
 		ensure: [ fileStream close ].
 
 		! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/14/2023 14:19:46'!
+!CuisInstallerBuilder class methodsFor: 'script generation' stamp: 'HAW 3/30/2024 17:46:57'!
 generateZipScript	
 	
 	| fileStream  |
@@ -187,11 +148,8 @@ generateZipScript
 		newLine;
 		nextPutAll: 'zip -r windows64 windows64';
 		newLine;
-		nextPutAll: 'zip -r windows32 windows32';
-		newLine;
 		nextPutAll: 'tar czf linux64.tar.gz linux64';
-		newLine;
-		nextPutAll: 'tar czf linux32.tar.gz linux32' ] ensure: [ fileStream close ].
+		newLine] ensure: [ fileStream close ].
 				
 
 ! !
@@ -284,22 +242,17 @@ generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versi
 
 ! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 1/22/2021 10:45:28'!
-generateLinux32RunScriptWith: versionNumber
+!CuisInstallerBuilder class methodsFor: 'directories' stamp: 'HAW 3/30/2024 17:14:08'!
+cuisImageDirName
 	
-	self 
-		generateRunScript: 'linux32/run.sh'
-		vmPath: 'vm/squeak'
-		imageNameTail: '-32'
-		with: versionNumber.
-		
-	self 
-		generateRunScript: 'linux32/run-jit.sh'
-		vmPath: 'vm/squeak-jit'
-		imageNameTail: '-32'
-		with: versionNumber! !
+	^'/CuisImage'! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/14/2023 13:58:45'!
+!CuisInstallerBuilder class methodsFor: 'directories' stamp: 'HAW 3/31/2018 15:42:24'!
+cuisSmalltalkDevDirName
+	
+	^'../Cuis-Smalltalk-Dev'! !
+
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/30/2024 17:43:48'!
 generateLinux64RunScriptWith: versionNumber
 	
 	self 
@@ -322,14 +275,14 @@ generateLinux64RunScriptWith: versionNumber
 		
 	self 
 		generateRunScript: 'linux64/run-jit.sh'
-		vmPath: 'vm-jit/squeak'
+		vmPath: 'vm-jit/CuisVM.app'
 		imageNameTail: ''
 		with: versionNumber
 
 		
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/14/2023 14:00:08'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/30/2024 17:44:51'!
 generateMacOs64RunScriptWith: versionNumber
 	
 	self 
@@ -353,7 +306,7 @@ generateMacOs64RunScriptWith: versionNumber
 
 	self 
 		generateRunScript: 'macos64/run-jit.sh'
-		vmPath: 'Squeak-jit.app/Contents/MacOS/Squeak'
+		vmPath: 'CuisVM.app/Contents/MacOS/Squeak'
 		imageNameTail: ''
 		with: versionNumber! !
 
@@ -375,7 +328,7 @@ generateWindow32RunScriptWith: versionNumber
 	
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/20/2023 11:12:43'!
+!CuisInstallerBuilder class methodsFor: 'run script generation' stamp: 'HAW 3/30/2024 17:42:54'!
 generateWindow64RunScriptWith: versionNumber
 	
 	self 
@@ -392,7 +345,7 @@ generateWindow64RunScriptWith: versionNumber
 
 	self 
 		generateRunScript: 'windows64/run-jit.bat'
-		vmPath: 'vm-jit\squeak'
+		vmPath: 'vm-jit\CuisVM.app'
 		imageNameTail: ''
 		with: versionNumber.
 ! !
