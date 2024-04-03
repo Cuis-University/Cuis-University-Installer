@@ -90,6 +90,10 @@ chmod +x copy64ImageFromDev.sh
 
 cd ../Cuis-Smalltalk-Dev
 
+cp -r CuisVM.app ../Cuis-University-Installer/linux64/vm-jit
+cp -r CuisVM.app ../Cuis-University-Installer/windows64/vm-jit
+cp -r CuisVM.app ../Cuis-University-Installer/macos64
+
 cp pullAllRepos.sh ../Cuis-University-Installer/linux64
 cp pullAllRepos.sh ../Cuis-University-Installer/windows64
 cp pullAllRepos.sh ../Cuis-University-Installer/macos64
@@ -189,10 +193,6 @@ cp -R CoreUpdates ../Cuis-University-Installer/macos64/CoreUpdates
 cp -R TrueTypeFonts ../Cuis-University-Installer/linux64/TrueTypeFonts
 cp -R TrueTypeFonts ../Cuis-University-Installer/windows64/TrueTypeFonts
 cp -R TrueTypeFonts ../Cuis-University-Installer/macos64/TrueTypeFonts
-
-cp CuisVM.app ../Cuis-University-Installer/linux64/vm-jit
-cp CuisVM.app ../Cuis-University-Installer/windows64/vm-jit
-cp CuisVM.app ../Cuis-University-Installer/macos64
 
 cd ../Cuis-University-Installer
 ../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
