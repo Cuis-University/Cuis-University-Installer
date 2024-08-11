@@ -1,16 +1,19 @@
+| newName fullNewName fullChangesName |
+
 Utilities classPool
 	at: #AuthorInitials put: 'HAW';
 	at: #AuthorName put: 'Hernan Wilkinson'.
 
 ChangeSet installNewUpdates.
 
-[ (Delay forSeconds: 2) wait.
+newName := Smalltalk filenameForUpdatedImage: true.
+fullNewName := (DirectoryEntry smalltalkImageDirectory // newName) pathName.
+fullChangesName := Smalltalk fullNameForChangesNamed: newName.
+
 '../../Installer' asDirectoryEntry
   at: 'copy64ImageFromDev.sh'
   put:
-    'mv ', Smalltalk imageName, ' .', String newLineString,
-    'mv ', Smalltalk defaultChangesName, ' .', String newLineString.
+    'mv ', fullNewName, ' .', String newLineString,
+    'mv ', fullChangesName, ' .', String newLineString.
 
-Smalltalk snapshot: true andQuit: true embedded: false clearAllClassState: false ] fork.
-
-Smalltalk saveRollingReleaseAndStay.
+Smalltalk saveRollingReleaseAndQuit.

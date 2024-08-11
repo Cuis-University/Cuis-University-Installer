@@ -16,8 +16,8 @@ fi
 
 rm *.zip
 rm *.tar.gz
-rm Cuis6*.image
-rm Cuis6*.changes
+rm Cuis7*.image
+rm Cuis7*.changes
 rm CuisUniversity*.image
 rm CuisUniversity*.changes
 rm TheCuisBook.pdf

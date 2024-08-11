@@ -6,6 +6,6 @@ CodePackageFile installPackage: '../cuis-move-instance-variable-refactoring/Move
 CodePackageFile installPackage: '../move-method-refactoring/MoveMethodRefactoring.pck.st' asFileEntry.
 CodePackageFile installPackage: '../cuis-extract-class-refactoring/ExtractClassRefactoring.pck.st' asFileEntry.
 
-newImageName := Smalltalk imageName asFileEntry name copyReplaceAll: 'Cuis6.3' with: 'CuisUniversity'.
+newImageName := Smalltalk imageName asFileEntry name copyReplaceAll: 'Cuis7.1' with: 'CuisUniversity'.
 
 Smalltalk saveAndQuitAs: newImageName clearAllClassState: false.
