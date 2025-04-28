@@ -76,13 +76,7 @@ git pull
 cd ../cuis-testlint
 git pull
 
-cd ../cuis-move-instance-variable-refactoring
-git pull
-
-cd ../move-method-refactoring
-git pull
-
-cd ../cuis-extract-class-refactoring
+cd ../Cuis-Smalltalk-MethodFinder
 git pull
 
 cd ../Cuis-Smalltalk-Dev
@@ -155,22 +149,6 @@ rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/linux64
 rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/macos64/Packages
 
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-move-instance-variable-refactoring ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../move-method-refactoring ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../move-method-refactoring ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../move-method-refactoring ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-extract-class-refactoring ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-extract-class-refactoring ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-extract-class-refactoring ../Cuis-University-Installer/macos64/Packages
-
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/macos64/Packages
@@ -178,6 +156,10 @@ rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/m
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/macos64/Packages
+
+rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/macos64/Packages
 
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/windows64/Packages
