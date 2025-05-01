@@ -145,6 +145,10 @@ rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/
 rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/macos64/Packages
 
+rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/macos64/Packages
+
 rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/macos64/Packages
