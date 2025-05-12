@@ -79,6 +79,9 @@ git pull
 cd ../Cuis-Smalltalk-MethodFinder
 git pull
 
+cd ../cuis-pro-extras
+git pull
+
 cd ../Cuis-Smalltalk-Dev
 git pull
 
@@ -160,6 +163,10 @@ rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/m
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/macos64/Packages
+
+rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/macos64/Packages
 
 rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/windows64/Packages
