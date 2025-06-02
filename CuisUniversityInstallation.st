@@ -17,6 +17,6 @@ CodePackageFile installPackage: '../Cuis-Smalltalk-Dev/Packages/Theme-Themes.pck
 CodePackageFile installPackage: '../Cuis-University/Debugger-MethodCreation.pck.st' asFileEntry.
 CodePackageFile installPackage: '../Cuis-University/CuisUniversity.pck.st' asFileEntry.
 
-newImageName := Smalltalk imageName asFileEntry name copyReplaceAll: 'Cuis7.3' with: 'CuisUniversity'.
+newImageName := Smalltalk imageName asFileEntry name copyReplaceAll: 'Cuis7.5' with: 'CuisUniversity'.
 
 Smalltalk saveAndQuitAs: newImageName clearAllClassState: false.
