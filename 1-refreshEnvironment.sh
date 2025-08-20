@@ -76,7 +76,7 @@ git pull
 cd ../cuis-testlint
 git pull
 
-cd ../Cuis-Smalltalk-MethodFinder
+cd ../MethodFinder
 git pull
 
 cd ../cuis-pro-extras
@@ -168,9 +168,9 @@ rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/linux
 rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/windows64/Packages
 rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/macos64/Packages
 
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-MethodFinder ../Cuis-University-Installer/macos64/Packages
+rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/linux64/Packages
+rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/windows64/Packages
+rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/macos64/Packages
 
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/linux64/Packages
 rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/windows64/Packages
