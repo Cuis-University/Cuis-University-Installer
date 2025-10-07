@@ -38,7 +38,7 @@ rm -R -f linux64/TrueTypeFonts
 rm -R -f windows64/TrueTypeFonts
 rm -R -f macos64/TrueTypeFonts
 
-curl -L -o TheCuisBook.pdf https://github.com/Cuis-Smalltalk/TheCuisBook/releases/download/latestpdfbuild/TheCuisBook.pdf
+curl -L -o TheCuisBook.pdf https://github.com/DrCuis/TheCuisBook/releases/download/20250309/TheCuisBook.pdf
 cp TheCuisBook.pdf macos64
 cp TheCuisBook.pdf linux64
 cp TheCuisBook.pdf windows64
