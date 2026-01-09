@@ -88,7 +88,7 @@ git pull
 ./pullAllRepos.sh
 
 cd ../Installer
-../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
+$VM_64 InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
 chmod +x updateImages.sh
 ./updateImages.sh
 chmod +x copy64ImageFromDev.sh
@@ -209,6 +209,6 @@ cp -R TrueTypeFonts ../Cuis-University-Installer/windows64/TrueTypeFonts
 cp -R TrueTypeFonts ../Cuis-University-Installer/macos64/TrueTypeFonts
 
 cd ../Cuis-University-Installer
-../Squeak.app/Contents/MacOS/Squeak InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
+$VM_64 InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
 chmod +x 2-build64Image.sh
 chmod +x 4-zip.sh

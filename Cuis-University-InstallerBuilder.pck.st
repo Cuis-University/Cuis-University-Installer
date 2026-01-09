@@ -1,6 +1,6 @@
-'From Cuis 6.0 [latest update: #5688] on 30 March 2024 at 5:56:48 pm'!
-'Description Update with version 6291'!
-!provides: 'Cuis-University-InstallerBuilder' 1 19!
+'From Cuis 6.0 [latest update: #5688] on 8 January 2026 at 6:36:22 pm'!
+'Description Updated to run without 5.0 directory'!
+!provides: 'Cuis-University-InstallerBuilder' 1 20!
 SystemOrganization addCategory: 'Cuis-University-InstallerBuilder'!
 
 
@@ -188,7 +188,7 @@ addExecutionOf: aScriptFileName to: fileStream vmPath: vmPath imageNameHead: hea
 		nextPutAll: '.image -s ';
 		nextPutAll: aScriptFileName .! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 1/17/2024 11:28:55'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 1/8/2026 18:28:49'!
 generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageNameTail: tail platforms: platforms pathSeparator: pathSeparator with: versionNumber
 
 	"self generate: '4-build32LinuxImage.sh' vmPath: 'linux32/vm/squeak' imageNameTail: '-V3' platforms: #('linux32') pathSeparator: '/' with: '3283'"
@@ -198,7 +198,7 @@ generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageName
 	self assertNameWithMajorVersionNumberIsDefined.
 	
 	fileStream := UniFileStream new 
-		open:  '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/', scriptName 
+		open:  '/Users/hernan/Documents/Cuis/Cuis-University-Installer/', scriptName 
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create ', scriptName ].
 
@@ -212,7 +212,7 @@ generate: scriptName vmPath: vmPath liveTypingVMPath: liveTypingVMPath imageName
 
 	! !
 
-!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 3/14/2023 14:19:26'!
+!CuisInstallerBuilder class methodsFor: 'script generation - private' stamp: 'HAW 1/8/2026 18:31:30'!
 generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versionNumber
 	
 	"self generateRunScript: macos64/run.sh' vmPath: 'CocoaFast64.app/Contents/MacOS/Squeak' imageNameTail: '' with: '32'"
@@ -220,7 +220,7 @@ generateRunScript: scriptFileName vmPath: vmPath imageNameTail: tail with: versi
 	| fileStream |
 	
 	fileStream := UniFileStream new 
-		open: '/Users/hernan/Documents/Cuis/5.0-64Bits/Cuis-University-Installer/', scriptFileName  
+		open: '/Users/hernan/Documents/Cuis/Cuis-University-Installer/', scriptFileName  
 		forWrite: true.
 	fileStream ifNil: [ self error: 'Could not create ', scriptFileName ].
 
