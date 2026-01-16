@@ -8,7 +8,6 @@ CodePackageFile installPackage: '../SystemCategoryAutoSaving/SystemCategoryAutoS
 CodePackageFile installPackage: '../cuis-pro-extras/EnclosableChars.pck.st' asFileEntry.
 CodePackageFile installPackage: '../cuis-code-coverage/CodeCoverage.pck.st' asFileEntry.
 CodePackageFile installPackage: '../cuis-finder-asWidget/Tools-Finder.pck.st' asFileEntry.
-CodePackageFile installPackage: '../cuis-finder-asWidget/Tools-FinderLiveTyping.pck.st' asFileEntry.
 CodePackageFile installPackage: '../TDDGuru/TDDGuru.pck.st' asFileEntry.
 CodePackageFile installPackage: '../cuis-testlint/TestLint.pck.st' asFileEntry.
 CodePackageFile installPackage: '../MethodFinder/MethodFinder.pck.st' asFileEntry.
