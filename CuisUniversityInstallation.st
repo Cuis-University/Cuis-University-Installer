@@ -1,6 +1,6 @@
 | newImageName |
 
-Feature require: 'BaseImageTests'.
+"Feature require: 'BaseImageTests'."
 CodePackageFile installPackage: '../LiveTyping/Smalltalk/LiveTyping.pck.st' asFileEntry.
 CodePackageFile installPackage: '../Measures/Aconcagua/Aconcagua.pck.st' asFileEntry.
 CodePackageFile installPackage: '../Calendars/Chalten/Chalten.pck.st' asFileEntry.

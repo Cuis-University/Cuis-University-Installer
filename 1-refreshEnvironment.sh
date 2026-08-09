@@ -1,4 +1,5 @@
 VM_64=../Cuis-Smalltalk-Dev/CuisVM.app/Contents/MacOS/Squeak
+#VM_64=../Squeak.app/Contents/MacOS/Squeak
 if [ -f "$VM_64" ]; then
     echo "64 VM Found"
 else
