@@ -1,215 +1,50 @@
-VM_64=../Cuis-Smalltalk-Dev/CuisVM.app/Contents/MacOS/Squeak
-#VM_64=../Squeak.app/Contents/MacOS/Squeak
-if [ -f "$VM_64" ]; then
-    echo "64 VM Found"
-else
-    echo "64 VM does not exist. It should be at $VM_64"
-    exit 1
+#!/usr/bin/env bash
+# Step 1 + 2: fresh (history-less) clone of Cuis-Smalltalk-Dev into the installer dir, then clone the
+# package repos into its Packages/.  NOTE: cuis-code-coverage has NO .git suffix (matches its origin).
+set -euo pipefail
+INSTALLER_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CLONE="$INSTALLER_DIR/Cuis-Smalltalk-Dev"
+DEV_URL="https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Dev.git"
+
+PACKAGE_REPOS=(
+  "Measures|https://github.com/Cuis-Smalltalk/Measures.git"
+  "Calendars|https://github.com/Cuis-Smalltalk/Calendars.git"
+  "LiveTyping|https://github.com/hernanwilkinson/LiveTyping.git"
+  "Cuis-Smalltalk-DenotativeObject|https://github.com/hernanwilkinson/Cuis-Smalltalk-DenotativeObject.git"
+  "Cuis-Smalltalk-Refactoring|https://github.com/hernanwilkinson/Cuis-Smalltalk-Refactoring.git"
+  "Cuis-University|https://github.com/Cuis-University/Cuis-University.git"
+  "TDDGuru|https://github.com/hernanwilkinson/TDDGuru.git"
+  "cuis-finder-asWidget|https://github.com/hernanwilkinson/cuis-finder-asWidget.git"
+  "cuis-code-coverage|https://github.com/npapagna/cuis-code-coverage"
+  "cuis-testlint|https://github.com/Garuflax/cuis-testlint.git"
+  "cuis-system-updater|https://github.com/npapagna/cuis-system-updater.git"
+  "SystemCategoryAutoSaving|https://github.com/hernanwilkinson/SystemCategoryAutoSaving.git"
+  "cuis-pro-extras|https://github.com/joelcamera/cuis-pro-extras.git"
+  "MethodFinder|https://github.com/hernanwilkinson/MethodFinder.git"
+  "VectorGraphics|https://github.com/Cuis-Smalltalk/VectorGraphics.git"
+  "TheCuisBook|https://github.com/Cuis-Smalltalk/TheCuisBook.git"
+  "Numerics|https://github.com/Cuis-Smalltalk/Numerics.git"
+  "Erudite|https://github.com/Cuis-Smalltalk/Erudite.git"
+  "Games|https://github.com/Cuis-Smalltalk/Games.git"
+  "Morphic|https://github.com/Cuis-Smalltalk/Morphic.git"
+  "Cuis-Smalltalk-Regex|https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Regex.git"
+  "Cuis-Smalltalk-Tools|https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Tools.git"
+)
+
+echo "==> Fresh clone of Cuis-Smalltalk-Dev"
+# Robust remove: if a Cuis VM is still writing into the tree, a single `rm -rf` can fail with
+# "Directory not empty" (a file reappears between unlink and rmdir). Retry a few times.
+if [ -e "$CLONE" ]; then
+  for _ in 1 2 3 4 5; do rm -rf "$CLONE" 2>/dev/null && break; sleep 1; done
+  [ -e "$CLONE" ] && { echo "error: could not remove $CLONE — a process is still writing to it (close any Cuis VM using it, then retry)" >&2; exit 1; }
 fi
+git clone --depth 1 "$DEV_URL" "$CLONE"
 
-VM_LiveTyping=../SqueakLiveTyping.app/Contents/MacOS/Squeak
-if [ -f "$VM_LiveTyping" ]; then
-  echo "LiveTyping VM Found"
-else
-    echo "LiveTyping VM does not exist. It should be at $VM_LiveTyping"
-    exit 1
-fi
-
-rm *.zip
-rm *.tar.gz
-rm Cuis7*.image
-rm Cuis7*.changes
-rm CuisUniversity*.image
-rm CuisUniversity*.changes
-rm TheCuisBook.pdf
-
-rm -R -f linux64/Packages
-rm -R -f windows64/Packages
-rm -R -f macos64/Packages
-
-rm -R -f linux64/Documentation
-rm -R -f windows64/Documentation
-rm -R -f macos64/Documentation
-
-rm -R -f linux64/CoreUpdates
-rm -R -f windows64/CoreUpdates
-rm -R -f macos64/CoreUpdates
-
-rm -R -f linux64/TrueTypeFonts
-rm -R -f windows64/TrueTypeFonts
-rm -R -f macos64/TrueTypeFonts
-
-curl -L -o TheCuisBook.pdf https://github.com/DrCuis/TheCuisBook/releases/download/20250309/TheCuisBook.pdf
-cp TheCuisBook.pdf macos64
-cp TheCuisBook.pdf linux64
-cp TheCuisBook.pdf windows64
-
-cd ../Cuis-University
-git pull
-
-cd ../LiveTyping
-git pull
-
-cd ../Cuis-Smalltalk-DenotativeObject
-git pull
-
-cd ../Cuis-Smalltalk-Refactoring
-git pull
-
-cd ../TDDGuru
-git pull
-
-cd ../cuis-finder
-git pull
-
-cd ../cuis-finder-asWidget
-git pull
-
-cd ../cuis-code-coverage
-git pull
-
-cd ../cuis-system-updater
-git pull
-
-cd ../SystemCategoryAutoSaving
-git pull
-
-cd ../cuis-testlint
-git pull
-
-cd ../MethodFinder
-git pull
-
-cd ../cuis-pro-extras
-git pull
-
-cd ../Cuis-Smalltalk-Dev
-git pull
-
-./pullAllRepos.sh
-
-cd ../Installer
-$VM_64 InstallerBuilder.image -d 'CuisInstallerBuilder generateUpdateImagesScriptAndExit'
-chmod +x updateImages.sh
-./updateImages.sh
-chmod +x copy64ImageFromDev.sh
-./copy64ImageFromDev.sh
-
-cd ../Cuis-Smalltalk-Dev
-
-cp -r CuisVM.app ../Cuis-University-Installer/linux64/vm-jit
-cp -r CuisVM.app ../Cuis-University-Installer/windows64/vm-jit
-cp -r CuisVM.app ../Cuis-University-Installer/macos64
-
-cp pullAllRepos.sh ../Cuis-University-Installer/linux64
-cp pullAllRepos.sh ../Cuis-University-Installer/windows64
-cp pullAllRepos.sh ../Cuis-University-Installer/macos64
-
-cp clonePackageRepos.sh ../Cuis-University-Installer/linux64
-cp clonePackageRepos.sh ../Cuis-University-Installer/windows64
-cp clonePackageRepos.sh ../Cuis-University-Installer/macos64
-
-cp -R Packages ../Cuis-University-Installer/linux64/Packages
-cp -R Packages ../Cuis-University-Installer/windows64/Packages
-cp -R Packages ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Measures ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Measures ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Measures ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Calendars ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Calendars ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Calendars ../Cuis-University-Installer/macos64/Packages
-
-mkdir ../Cuis-University-Installer/linux64/Packages/LiveTyping
-mkdir ../Cuis-University-Installer/windows64/Packages/LiveTyping
-mkdir ../Cuis-University-Installer/macos64/Packages/LiveTyping
-
-rsync -r --exclude '.git*' ../LiveTyping/Smalltalk/*.pck.st ../Cuis-University-Installer/linux64/Packages/LiveTyping
-rsync -r --exclude '.git*' ../LiveTyping/Smalltalk/*.pck.st ../Cuis-University-Installer/windows64/Packages/LiveTyping
-rsync -r --exclude '.git*' ../LiveTyping/Smalltalk/*.pck.st ../Cuis-University-Installer/macos64/Packages/LiveTyping
-
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-DenotativeObject ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-DenotativeObject ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-DenotativeObject ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-Refactoring ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-Refactoring ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Cuis-Smalltalk-Refactoring ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Cuis-University ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Cuis-University ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Cuis-University ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../TDDGuru ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../TDDGuru ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../TDDGuru ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-finder-asWidget ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-code-coverage ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-testlint ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-system-updater ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../SystemCategoryAutoSaving ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../cuis-pro-extras ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../MethodFinder ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../VectorGraphics ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../TheCuisBook ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../TheCuisBook ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../TheCuisBook ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Numerics ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Numerics ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Numerics ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Erudite ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Erudite ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Erudite ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Games ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Games ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Games ../Cuis-University-Installer/macos64/Packages
-
-rsync -r --exclude '.git*' ../Morphic ../Cuis-University-Installer/linux64/Packages
-rsync -r --exclude '.git*' ../Morphic ../Cuis-University-Installer/windows64/Packages
-rsync -r --exclude '.git*' ../Morphic ../Cuis-University-Installer/macos64/Packages
-
-cp -R Documentation ../Cuis-University-Installer/linux64/Documentation
-cp -R Documentation ../Cuis-University-Installer/windows64/Documentation
-cp -R Documentation ../Cuis-University-Installer/macos64/Documentation
-
-cp -R CoreUpdates ../Cuis-University-Installer/linux64/CoreUpdates
-cp -R CoreUpdates ../Cuis-University-Installer/windows64/CoreUpdates
-cp -R CoreUpdates ../Cuis-University-Installer/macos64/CoreUpdates
-
-cp -R TrueTypeFonts ../Cuis-University-Installer/linux64/TrueTypeFonts
-cp -R TrueTypeFonts ../Cuis-University-Installer/windows64/TrueTypeFonts
-cp -R TrueTypeFonts ../Cuis-University-Installer/macos64/TrueTypeFonts
-
-cd ../Cuis-University-Installer
-$VM_64 InstallerBuilder.image -d 'CuisInstallerBuilder generateScriptsAndExit'
-chmod +x 2-build64Image.sh
-chmod +x 4-zip.sh
+echo "==> Cloning ${#PACKAGE_REPOS[@]} package repos into Packages/"
+mkdir -p "$CLONE/Packages"
+for entry in "${PACKAGE_REPOS[@]}"; do
+  name="${entry%%|*}"; url="${entry#*|}"
+  echo "    - $name"
+  rm -rf "$CLONE/Packages/$name"
+  git clone --depth 1 "$url" "$CLONE/Packages/$name"
+done
