@@ -29,7 +29,13 @@ PACKAGE_REPOS=(
   "Morphic|https://github.com/Cuis-Smalltalk/Morphic.git"
   "Cuis-Smalltalk-Regex|https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Regex.git"
   "Cuis-Smalltalk-Tools|https://github.com/Cuis-Smalltalk/Cuis-Smalltalk-Tools.git"
+  "OSProcess|https://github.com/Cuis-Smalltalk/OSProcess"
+  "Cuis-MCPServer|https://github.com/hernanwilkinson/Cuis-MCPServer"
+  "SmalltalkMentor|https://github.com/hernanwilkinson/SmalltalkMentor.git"
 )
+
+echo "==> Removing previous CuisUniversity*.zip artifacts"
+rm -f "$INSTALLER_DIR"/CuisUniversity*.zip
 
 echo "==> Fresh clone of Cuis-Smalltalk-Dev"
 # Robust remove: if a Cuis VM is still writing into the tree, a single `rm -rf` can fail with
