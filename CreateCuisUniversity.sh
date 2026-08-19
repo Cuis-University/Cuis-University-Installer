@@ -22,4 +22,7 @@ bash "$DIR/5-initializeCuisUniversityWithLiveTypingVM.sh"
 echo "==> [6] zip CuisUniversity"
 bash "$DIR/6-zipCuisUniversity.sh"
 
-echo "==> Done. Artifacts: the version-stamped CuisUniversity<version>-full.zip and -slim.zip in $DIR"
+echo "==> [7] publish GitHub release"
+bash "$DIR/7-createGitHubRelease.sh"
+
+echo "==> Done. Published the release; -full.zip / -slim.zip are also in $DIR"
