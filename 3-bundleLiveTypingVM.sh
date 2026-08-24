@@ -73,3 +73,31 @@ fi
 codesign --force --sign - "$APP"
 
 echo "==> LiveTypingVM.app assembled ($(lipo -archs "$CONTENTS/MacOS/Squeak" 2>/dev/null))"
+
+# --- Publish the assembled bundle as the "LiveTypingVM" release of the LiveTyping repo ---
+# Zips LiveTypingVM.app and uploads it to a single, stable rolling release (tag/title
+# "LiveTypingVM") so the download link is permanent. Best-effort: if gh is missing or not
+# authenticated, warn and skip (the app itself is already built) rather than failing the pipeline.
+LT_REPO="hernanwilkinson/LiveTyping"
+LT_TAG="LiveTypingVM"
+LT_TITLE="LiveTypingVM"
+
+if ! command -v gh >/dev/null 2>&1 || ! gh auth status >/dev/null 2>&1; then
+  echo "warn: gh (GitHub CLI) missing or not authenticated -- skipping the $LT_TITLE release upload." >&2
+else
+  TMPD="$(mktemp -d)"
+  ZIP="$TMPD/LiveTypingVM.zip"
+  echo "==> Zipping LiveTypingVM.app -> LiveTypingVM.zip"
+  ( cd "$CLONE" && ditto -c -k --keepParent "LiveTypingVM.app" "$ZIP" )
+
+  echo "==> Publishing '$LT_TITLE' ($LT_TAG) to $LT_REPO"
+  if gh release view "$LT_TAG" --repo "$LT_REPO" >/dev/null 2>&1; then
+    gh release upload "$LT_TAG" "$ZIP" --repo "$LT_REPO" --clobber
+    gh release edit "$LT_TAG" --repo "$LT_REPO" --title "$LT_TITLE" --latest >/dev/null
+  else
+    gh release create "$LT_TAG" "$ZIP" --repo "$LT_REPO" --title "$LT_TITLE" --latest \
+      --notes "Cross-platform LiveTyping VM: universal macOS (arm64 + x86_64), Linux x86_64/arm64, Windows x86_64/arm64. Unzip and launch the VM for your platform."
+  fi
+  rm -rf "$TMPD"
+  echo "==> Released: https://github.com/$LT_REPO/releases/tag/$LT_TAG"
+fi
