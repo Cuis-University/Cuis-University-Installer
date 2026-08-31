@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
-# Build the CuisUniversity distribution end-to-end by running the numbered step scripts in order.
-# (Renamed from bundleLiveTypingVM.sh; each of the 7 original steps now lives in its own N-*.sh.)
+# Build the CuisUniversity image (steps 1-5): refresh the environment, create the image with the
+# standard Cuis VM, bundle the cross-platform LiveTyping VM, write the launcher scripts, and run the
+# LiveTyping initialization pass. The result is a ready-to-run Cuis-Smalltalk-Dev/ tree; packaging
+# and publishing (steps 6-7) are done by makeNewRelease.sh.
 set -euo pipefail
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -19,10 +21,4 @@ bash "$DIR/4-createLauncherScripts.sh"
 echo "==> [5] initialize CuisUniversity with the LiveTyping VM"
 bash "$DIR/5-initializeCuisUniversityWithLiveTypingVM.sh"
 
-echo "==> [6] zip CuisUniversity"
-bash "$DIR/6-zipCuisUniversity.sh"
-
-echo "==> [7] publish GitHub release"
-bash "$DIR/7-createGitHubRelease.sh"
-
-echo "==> Done. Published the release; -full.zip / -slim.zip are also in $DIR"
+echo "==> CuisUniversity image built (steps 1-5)."
